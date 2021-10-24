@@ -54,13 +54,16 @@ public class SnakeMovement : MonoBehaviour {
         newPosition.z = transform.position.z + speed * Time.deltaTime;
 
         // horizontal movement
-        float posX = 0f;
-        Vector3 touchPos = Input.mousePosition;
-        Ray mRay = Camera.main.ScreenPointToRay(touchPos);
-        if (mRay.direction.z != 0)
-            posX = cameraOffset.magnitude * mRay.direction.x;
-        newPosition.x = posX;
-        
+        if (Input.touchCount > 0)
+        {
+            float posX = 0f;
+            Vector3 touchPos = Input.GetTouch(0).position;
+            Ray mRay = Camera.main.ScreenPointToRay(touchPos);
+            if (mRay.direction.z != 0)
+                posX = cameraOffset.magnitude * mRay.direction.x;
+            newPosition.x = posX;
+        }
+
         transform.position = newPosition;
 
     }
