@@ -14,10 +14,10 @@ public class TailMovement : MonoBehaviour {
 	public int numberTarget;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		mainSnake = GameObject.FindWithTag("Player").GetComponent<SnakeMovement>();
-		tailTarget = mainSnake.tailObjects[mainSnake.tailObjects.Count-2];
-		numberTarget = mainSnake.tailObjects.IndexOf(gameObject);
+		tailTarget = mainSnake.tailObjects[mainSnake.tailObjects.Count-1];
+
 	}
 	
 	// Update is called once per frame

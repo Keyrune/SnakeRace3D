@@ -14,6 +14,7 @@ public class SnakeMovement : MonoBehaviour {
 	public Text scoreText;
 	public int scoreNumber = 0;
     private Vector3 cameraOffset;
+    public Color snakeColor = Color.red;
 
 
 	// Use this for initialization
@@ -28,22 +29,16 @@ public class SnakeMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
     {
-		
-
 		Move();
-
-        if (Input.GetKeyDown(KeyCode.E)){
-			AddTail();
-		}
-		
-
 	}
 
 	public void AddTail()
-    {
+    {   
 		Vector3 newTailPosition = tailObjects[tailObjects.Count-1].transform.position;
-		//speed += 0.1f;
-		tailObjects.Add(GameObject.Instantiate(tailPrefab, newTailPosition, Quaternion.identity) as GameObject);
+        GameObject newTail = GameObject.Instantiate(tailPrefab, newTailPosition, Quaternion.identity);
+        newTail.GetComponent<Renderer>().material.color = snakeColor;
+		tailObjects.Add(newTail);
+
 
         // Update score
 		scoreNumber++;
@@ -52,11 +47,10 @@ public class SnakeMovement : MonoBehaviour {
 
     private void Move()
     {
-        Vector3 newPosition;
+        Vector3 newPosition = Vector3.forward;
         newPosition = transform.position;
 
         // move forward
-        //transform.Translate(Vector3.forward * speed * Time.deltaTime);
         newPosition.z = transform.position.z + speed * Time.deltaTime;
 
         // horizontal movement
@@ -68,5 +62,16 @@ public class SnakeMovement : MonoBehaviour {
         newPosition.x = posX;
         
         transform.position = newPosition;
+
     }
+
+    public void ChangeCollor(Color color)
+    {
+        snakeColor = color;
+        foreach (GameObject tailPart in tailObjects)
+        {
+            tailPart.GetComponent<Renderer>().material.color = color;
+        }
+    }
+
 }
