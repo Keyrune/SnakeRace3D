@@ -1,0 +1,38 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class TailMovement : MonoBehaviour {
+
+	public float speed;
+
+	public GameObject tailTarget;
+	public Vector3 tailTargetPosition;
+	
+	public SnakeMovement mainSnake;
+	public int numberTarget;
+
+	// Use this for initialization
+	void Start () {
+		mainSnake = GameObject.FindWithTag("Player").GetComponent<SnakeMovement>();
+		tailTarget = mainSnake.tailObjects[mainSnake.tailObjects.Count-2];
+		numberTarget = mainSnake.tailObjects.IndexOf(gameObject);
+	}
+	
+	// Update is called once per frame
+	void Update () {
+		//cada vez leemos la velocidad actual de la cabeza serpiente
+		speed = mainSnake.speed;
+		tailTargetPosition = tailTarget.transform.position;
+		transform.LookAt(tailTargetPosition);
+		transform.position = Vector3.Lerp(transform.position, tailTargetPosition, Time.deltaTime * speed * 3);
+	}
+
+	//void OnTriggerEnter(Collider other) {
+	//	//colisión de cabeza de la serpiente a una parte de su cola
+	//	if (other.CompareTag("Player") && numberTarget > 2){ 
+	//		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+	//	}
+	//}
+}
